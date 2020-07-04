@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <header>
         <div class="logo">GeekShop</div>
         <div class="basket">
@@ -10,12 +10,12 @@
                 </button>
             </form>
             <button class="btn-basket">Корзина</button>
-            <basket ref="kolya" />
+            <basket ref="basket" />
             
         </div>
     </header>
     <main>
-        <catalog />
+        <catalog @add="addItem"/>
     </main>
   </div>
 </template>
@@ -42,6 +42,9 @@ export default {
         //пробрасываемые извне данные, которые не изменяются внутри компонента
     },
     methods: {
+        addItem(item) {
+            this.$refs.basket.add(item);
+        },
         get(url) {
             return fetch(url).then(data => data.json());
         }

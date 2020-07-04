@@ -45,7 +45,7 @@ class Item {
 
     render() {
         return `<div class="catalog-item">
-                    <img src="http://placehold.it/300x200" alt="${this.item.product_name}">
+                    <img src="/img/products/product-1.jpg" alt="${this.item.product_name}">
                     <div class="desc">
                         <h3>${this.item.product_name}</h3>
                         <p>${this.item.price} $</p>

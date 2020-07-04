@@ -1,0 +1,36 @@
+[{
+    "id_product": 1,
+    "product_name": "BLONDE",
+    "price": 100,
+    "img": "https://raw.githubusercontent.com/Sergey-TR/testrepo/master/public/img/product-2.png",
+    "img_sm": "https://raw.githubusercontent.com/Sergey-TR/testrepo/master/public/img/product-2small.png"
+},
+{
+    "id_product": 2,
+    "product_name": "MAN",
+    "price": 120,
+    "img": "https://raw.githubusercontent.com/Sergey-TR/testrepo/master/public/img/product-3.png",
+    "img_sm": "https://raw.githubusercontent.com/Sergey-TR/testrepo/master/public/img/product-3small.png"
+},
+{
+    "id_product": 3,
+    "product_name": "SHATEN",
+    "price": 130,
+    "img": "https://raw.githubusercontent.com/Sergey-TR/testrepo/master/public/img/product-4.png",
+    "img_sm": "https://raw.githubusercontent.com/Sergey-TR/testrepo/master/public/img/product-4small.png"
+},
+{
+    "id_product": 4,
+    "product_name": "PEROXID",
+    "price": 50,
+    "img": "https://raw.githubusercontent.com/Sergey-TR/testrepo/master/public/img/product-5.png",
+    "img_sm": "https://raw.githubusercontent.com/Sergey-TR/testrepo/master/public/img/product-5small.png"
+},
+{
+    "id_product": 5,
+    "product_name": "PIMP",
+    "price": 150,
+    "img": "https://raw.githubusercontent.com/Sergey-TR/testrepo/master/public/img/product-11.png",
+    "img_sm": "https://raw.githubusercontent.com/Sergey-TR/testrepo/master/public/img/product-11small.png"
+}
+]

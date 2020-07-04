@@ -9,56 +9,7 @@
 
 <body>
     <div id="app">
-        <header>
-            <div class="logo">GeekShop</div>
-            <div class="basket">
-                <form action="#" class="search-form">
-                    <input type="text" class="search-field">
-                    <button class="btn-search">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
-                <button class="btn-basket" @click="basket = !basket">Корзина</button> <!--при клике на кноку, свойство баскет поменяется на противоположное-->
-                <div class="basket-block" v-show="basket"> <!--отображает содержимое дива при истинном значении свойства баскет-->
-                    <div class="basket-items">
-                        <!--Basket elems-->
-                        <div class="basket-item" v-for="item of basketItems">
-                            <img src="http://placehold.it/100x80" alt="item.product_name"> <!--"усы" писать только для вывода содержимого на страницу. В свойствах или атрибутах не писать.-->
-                            <div class="basket-items">
-                            <div class="product-desc">
-                                <p class="product-title">{{item.product_name}}</p>
-                                <p class="product-amount">{{item.quantity}}</p>
-                                <p class="product-single-price">{{item.price}}</p>
-                            </div>
-                            <div class="right-block">
-                                <p class="product-price">{{item.price * item.quantity}}</p>
-                                <button class="del-btn" name="remove" @click="remove(item)" data-id="item.id_product">&times;</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <main>
-            <div class="catalog-items">
-                <!--Catalog elems-->
-                <div class="catalog-item" v-for="item of items">
-                    <img src="http://placehold.it/300x200" alt="item.product_name">
-                    <div class="desc">
-                        <h3>{{item.product_name}} test</h3>
-                        <p>{{item.price}} $</p>
-                        <button class="buy-btn" 
-                            name="buy" 
-                            data-name="item.product_name" 
-                            data-price="item.price"
-                            data-id="item.id_product" 
-                            @click="add(item)">
-                            Buy
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </main>
+        
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"

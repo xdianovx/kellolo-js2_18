@@ -1,74 +1,144 @@
-const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+//https://raw.githubusercontent.com/gavrilovem/catalogData/master/catalogData.json
+//https://raw.githubusercontent.com/gavrilovem/catalogData/master/getBasket.json
 
-const app = new Vue({
-    el: '#app',
-    data: {
-        userSearch: '',
-        showCart: false,
-        cartUrl: '/getBasket.json',
-        catalogUrl: '/catalogData.json',
-        products: [],
-        cartItems: [],
-        filtered: [],
-        imgCatalog: 'https://placehold.it/300x200',
-        imgCart: 'https://placehold.it/100x80',
-    },
-    methods: {
-        getJson(url) {
-            return fetch(url)
-                .then(result => result.json())
-                .catch(error => {
-                    console.log(error);
-                });
-        },
-        addProduct(product) {
-            this.getJson(`${API}/addToBasket.json`)
-                .then(data => {
-                    if (data.result === 1) {
-                        let find = this.cartItems.find(el => el.id_product === product.id_product);
-                        if (find) {
-                            find.quantity++;
-                        } else {
-                            let prod = Object.assign({
-                                quantity: 1
-                            }, product);
-                            this.cartItems.push(prod)
-                        }
-                    } else {
-                        alert('Error');
-                    }
-                });
-        },
-        remove(item) {
-            this.getJson(`${API}/deleteFromBasket.json`)
-                .then(data => {
-                    if (data.result === 1) {
-                        if (item.quantity > 1) {
-                            item.quantity--;
-                        } else {
-                            this.cartItems.splice(this.cartItems.indexOf(item), 1)
-                        }
-                    }
-                });
-        },
-        filter() {
-            let regexp = new RegExp(this.userSearch, 'i');
-            this.filtered = this.products.filter(el => regexp.test(el.product_name));
-        },
-    },
-    mounted() {
-        this.getJson(`${API + this.cartUrl}`)
-            .then(data => {
-                for (let el of data.contents) {
-                    this.cartItems.push(el);
-                    this.filtered.push(el);
-                }
-            });
-        this.getJson(`${API + this.catalogUrl}`)
-            .then(data => {
-                for (let el of data) {
-                    this.products.push(el);
-                }
-            });
+class List {
+    constructor(url, container, basket) {
+        this.url = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses' + url;
+        this.container = container;
+        this.items = [];
+        this._init(basket);
     }
-});
+
+    _init(basket = false) {
+        this._get(this.url)
+            .then(data => {
+                this.items = !basket ? data : data.contents;
+                // this.items = data.length ? data : data.contents;
+                //catalog => [...], basket => {... contents: [...]}
+                this._render();
+                this._handleEvents();
+                console.log(this.constructor.name, this)
+        })
+    }
+
+    _get(url) {
+        return fetch(url).then(data => data.json());
+    }
+
+    _render() {
+        let htmlStr = '';
+        this.items.forEach (item => {
+            htmlStr += new connect[this.constructor.name](item).render();
+        })
+        document.querySelector(this.container).innerHTML = htmlStr;      
+    }
+
+    _handleEvents() { 
+        return ''
+    }
+}
+
+class Item {
+    constructor(item) {
+        this.item = item;
+    }
+
+    render() {
+        return `<div class="catalog-item">
+                    <img src="http://placehold.it/300x200" alt="${this.item.product_name}">
+                    <div class="desc">
+                        <h3>${this.item.product_name}</h3>
+                        <p>${this.item.price} $</p>
+                        <button 
+                            class="buy-btn" 
+                            name="buy"
+                            data-name="${this.item.product_name}"
+                            data-price="${this.item.price}"
+                            data-id="${this.item.id_product}"
+                        >Buy</button>
+                    </div>
+                </div>`
+    }
+}
+
+class Catalog extends List {
+    constructor(basket, url = '/catalogData.json', container = '.catalog-items') {
+        super(url, container);
+        this.basket = basket;
+    }
+    _handleEvents() {
+        document.querySelector(this.container).addEventListener('click', evt => {
+            if (evt.target.name == 'buy') {
+                this.basket.add(evt.target.dataset);
+            }
+        });
+    }
+}
+
+class Basket extends List {
+    constructor(url = '/getBasket.json', container = '.basket-items', basket = true) {
+        super(url, container, basket);
+    }
+    _handleEvents() {
+        document.querySelector(this.container).addEventListener('click', evt => {
+            if (evt.target.name == 'remove') {
+                this.remove(evt.target.dataset.id);
+            }
+        });
+
+        document.querySelector('.btn-basket').addEventListener('click', evt => {
+            document.querySelector('.basket-block').classList.toggle('invisible');
+        });
+    }
+
+    add(item) {
+        let find = this.items.find(el => el.id_product == item.id);
+        if (find) {
+            find.quantity++;
+            this._render();
+        } else {
+            let itemNew = { id_product: item.id, product_name: item.name, price: +item.price, quantity: 1 };
+            this.items.push(itemNew);
+            this._render();
+        }
+    }
+
+    remove(itemId) {
+        let find = this.items.find(el => el.id_product == itemId);
+        console.log('попытка удалить ' + itemId)
+    }
+}
+
+class CatalogItem extends Item {}
+
+class BasketItem extends Item {
+    constructor(item) {
+        super(item)
+    }
+
+    render() {
+        return `<div class="basket-item">
+                    <img src="http://placehold.it/100x80" alt="${this.item.product_name}">
+                    <div class="product-desc">
+                        <p class="product-title">${this.item.product_name}</p>
+                        <p class="product-amount">${this.item.quantity}</p>
+                        <p class="product-single-price">${this.item.price}</p>
+                    </div>
+                    <div class="right-block">
+                        <p class="product-price">${this.item.price * this.item.quantity}</p>
+                        <button class="del-btn" name="remove" data-id="${this.item.id_product}">&times;</button>
+                    </div>
+                </div>`
+    }
+}
+
+
+let connect = {
+    'Catalog': CatalogItem,
+    'Basket': BasketItem
+}
+
+export default () => {
+    let basket = new Basket();
+    let catalog = new Catalog(basket);
+}

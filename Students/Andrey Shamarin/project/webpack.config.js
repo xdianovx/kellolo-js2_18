@@ -1,6 +1,6 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 module.exports = {
 	// entry: {  // входной файл для сервера (если index.js, то можно не указывать)
     //     main: './src/app.js'
@@ -17,7 +17,8 @@ module.exports = {
 		}),
 		new HtmlWebpackPlugin({
 				template: './public/index.html'
-		})
+		}),
+		new VueLoaderPlugin()
 		],
 	module: {
 		rules: [
@@ -25,6 +26,16 @@ module.exports = {
 				test: /\.css$/i,
 				use: [MiniCssExtractPlugin.loader, 'css-loader'],
 			},
+			{
+				test: /\.js$/i,
+				loader: 'babel-loader',
+				exclude: /node_modules/
+			},
+			{
+				test: /\.vue$/i,
+				loader: 'vue-loader',
+				exclude: /node_modules/
+			}
 		],
 	},
 	devServer: {

@@ -1,0 +1,22 @@
+{
+ "amount": 550,
+ "countGoods": 5,
+ "contents": [
+  {
+   "id_product": 1,
+   "product_name": "HTML5 & CSS3",
+   "price": 100,
+   "img": "http://placehold.it/200x150",
+   "imgS": "http://placehold.it/100x80",
+   "quantity": 8
+  },
+  {
+   "id_product": 3,
+   "product_name": "JavaScript advanced",
+   "price": 130,
+   "img": "http://placehold.it/200x150",
+   "imgS": "http://placehold.it/100x80",
+   "quantity": 1
+  }
+ ]
+}

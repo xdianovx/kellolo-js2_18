@@ -1,0 +1,20 @@
+{
+  "name": "geek_js_2",
+  "version": "1.0.0",
+  "description": "Geekbrains Javascript level 2",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "author": "Aleksandr Pelev1n",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "bootstrap": "^4.5.0",
+    "jquery": "^3.5.1",
+    "popper.js": "^1.16.1"
+  }
+}
